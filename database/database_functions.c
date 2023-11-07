@@ -4,42 +4,36 @@
 #include <sqlite3.h>
 #include "database_functions.h"
 
+static sqlite3 *db = NULL;
 
-sqlite3 *openDatabaseConnection(const char *db_name)
-{
-    sqlite3 *db;
-    int rc = sqlite3_open(db_name, &db);
-    if (rc)
-    {
-        fprintf(stderr, "\nCan't open database: %s\n", sqlite3_errmsg(db));
-        return NULL;
+sqlite3 *openDatabaseConnection(const char *db_name) {
+    if (db) {
+        fprintf(stdout, "Database connection already open\n");
+        return db;
     }
-    else
-    {
+
+    int return_code = sqlite3_open(db_name, &db);
+    if (return_code != SQLITE_OK) {
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+        return NULL;
+    } else {
         fprintf(stdout, "\nOpened database successfully\n");
         return db;
     }
 }
 
-void closeDatabaseConnection(sqlite3 *db)
-{
-    if (db)
-    {
+void closeDatabaseConnection() {
+    if (db) {
         sqlite3_close(db);
-        fprintf(stdout, "Closed database successfully\n");
-    }
-    else
-    {
-        fprintf(stderr, "No open database connection to close\n");
+        fprintf(stdout, "\nClosed database successfully\n");
+        db = NULL;
+    } else {
+        fprintf(stderr, "\nNo open database connection to close\n");
     }
 }
 
-int initializeDatabase(const char *db_name)
-{
-    sqlite3 *db = openDatabaseConnection(db_name);
-
-    if (!db)
-    {
+int initializeDatabase(const char *db_name) {
+    if (!openDatabaseConnection(db_name)) {
         fprintf(stderr, "Failed to open the database\n");
         return 1;
     }
@@ -47,47 +41,16 @@ int initializeDatabase(const char *db_name)
     char *sql = "CREATE TABLE IF NOT EXISTS IP_ADDRESS_LIST(Id INT, Ip_address TEXT, Mask TEXT);";
 
     char *err_msg = 0;
-    int rc = sqlite3_exec(db, sql, 0, 0, &err_msg);
+    int return_code = sqlite3_exec(db, sql, 0, 0, &err_msg);
 
-    if (rc != SQLITE_OK)
-    {
+    if (return_code != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", err_msg);
         sqlite3_free(err_msg);
+        closeDatabaseConnection();
         return 1;
-    }
-    else
-    {
+    } else {
         fprintf(stdout, "Table for ip_address found\n");
     }
 
     return 0;
-}
-
-void listTableContents(const char *db_name)
-{
-    sqlite3 *db = openDatabaseConnection(db_name);
-
-    char *sql = "SELECT * FROM IP_ADDRESS_LIST;";
-    sqlite3_stmt *res;
-
-    int rc = sqlite3_prepare_v2(db, sql, -1, &res, 0);
-
-    if (rc != SQLITE_OK)
-    {
-        fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db));
-        return;
-    }
-
-    fprintf(stdout, "ID\tIP_ADDRESS\tMASK\n");
-
-    while (sqlite3_step(res) == SQLITE_ROW)
-    {
-        printf("%d\t%s\t%s\n",
-               sqlite3_column_int(res, 0),
-               sqlite3_column_text(res, 1),
-               sqlite3_column_text(res, 2));
-    }
-
-    sqlite3_finalize(res);
-    closeDatabaseConnection(db);
 }
