@@ -67,12 +67,6 @@ void listTableContents(const char *db_name)
 {
     sqlite3 *db = openDatabaseConnection(db_name);
 
-    if (!isDatabaseOpened(db_name))
-    {
-        fprintf(stderr, "Failed to open the database\n");
-        return;
-    }
-
     char *sql = "SELECT * FROM IP_ADDRESS_LIST;";
     sqlite3_stmt *res;
 
