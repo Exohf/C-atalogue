@@ -43,6 +43,7 @@ void handleInput(char command)
     switch (command)
     {
     case 'a':
+        getAndVerifyIPAddress();
         break;
     case 'c':
         clearConsole();
