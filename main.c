@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "database/database_functions.h"
+#include "utils/utils.h"
 // sudo apt-get install libsqlite3-dev
 // gcc -o a.out main.c -lsqlite3
 // #include <regex.h>
