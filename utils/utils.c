@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "utils.h"
-#include "database_functions.h"
+#include "../database/database_functions.h"
 
 void clearConsole()
 {
