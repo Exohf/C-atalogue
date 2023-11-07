@@ -12,4 +12,11 @@ Pour lancer le programme, suivez ces étapes :
 
 ```bash
 bash build_and_run.sh
+```
 
+
+.gitignore content:
+  
+.gitignore
+IP_ADDRESS_LIST.db
+program
