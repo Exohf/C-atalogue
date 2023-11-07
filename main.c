@@ -1,14 +1,7 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include "database/database_functions.h"
 #include "utils/utils.h"
-// sudo apt-get install libsqlite3-dev
-// gcc -o a.out main.c -lsqlite3
-// #include <regex.h>
-// REGEX IP ADRESS = (\b25[0-5]|\b2[0-4][0-9]|\b[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3} : https://ihateregex.io/expr/ip/
-// Souhaitez-vous continuer ? [O/n]
+#include "database/database_functions.h"
+
 #define MAX_IP_LENGTH 16
 #define MAX_IP_COUNT 100
 #define DB_NAME "IP_ADDRESS_LIST.db"
@@ -18,7 +11,7 @@ int ip_count = 0;
 
 void start()
 {
-    clearConsole();
+    // clearConsole();
 
     const char *message = ":::::::                   ::: ::::::::::: :::     :::        ::::::::   ::::::::  :::    ::: ::::::::::\n"
                           ":+:    :+:                :+: :+:   :+:   :+: :+:   :+:       :+:    :+: :+:    :+: :+:    :+: :+:\n"
@@ -39,6 +32,7 @@ void start()
         line = strtok(NULL, delimiter);
     }
 
+    initializeDatabase(DB_NAME);
     warnHelpCommand();
 
     free(message_copy);
@@ -60,9 +54,9 @@ void handleInput(char command)
         displayHelper();
         break;
     case 'l':
-        listTableContents(DB_NAME);
         break;
     case 'q':
+        closeDatabaseConnection();
         printf("\nExiting the program...\n");
         exit(0);
     case 's':
@@ -73,14 +67,14 @@ void handleInput(char command)
         break;
     }
 }
-
+// Souhaitez-vous continuer ? [O/n]
 int main()
 {
     start();
 
     while (1)
     {
-        printf("Enter a command : ");
+        printf("Enter command : ");
         char command = getchar();
 
         // Fix null "press enter" issue
