@@ -13,9 +13,5 @@ void handleInvalidCommand();
 void clearInputBuffer();
 void start();
 void displayHelper();
-int verifyIPAddress(char *ipAddress);
-void askAndValidateMask(char *mask);
-int validateMask(char *mask);
-void getAndVerifyIPAddress();
 
 #endif /* UTILS_UTILS_H */
