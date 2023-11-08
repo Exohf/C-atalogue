@@ -16,7 +16,7 @@ void printNoCompilationRegex();
 int compileAndPrintErrorRegex(regex_t *regex);
 void printAddressValidity(char *address, int isValid, int isIp);
 void printRegexError(int failedProcess, regex_t *regex);
-int handleVerificationResult(int verifyProcess, regex_t *regex, int isIp);
+int handleVerificationResult(int verifyProcess, regex_t *regex);
 int verifyAddress(char *address, int isIp);
 void getAndVerifyIpMask(char *mask);
 void getAndVerifyIPAddress();
