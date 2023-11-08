@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "utils/utils.h"
 #include "database/database_functions.h"
+#include "validations/validations.h"
 
 #define MAX_IP_LENGTH 16
 #define MAX_IP_COUNT 100
