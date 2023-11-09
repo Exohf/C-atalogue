@@ -3,12 +3,7 @@
 #include "database/database_functions.h"
 #include "validations/validations.h"
 
-#define MAX_IP_LENGTH 16
-#define MAX_IP_COUNT 100
 #define DB_NAME "IP_ADDRESS_LIST.db"
-
-char ip_addresses[MAX_IP_COUNT][MAX_IP_LENGTH];
-int ip_count = 0;
 
 void start()
 {
@@ -44,7 +39,7 @@ void handleInput(char command)
     switch (command)
     {
     case 'a':
-        getAndVerifyIPAddress();
+        getAndVerifyIPAddress(DB_NAME);
         break;
     case 'c':
         clearConsole();
@@ -56,6 +51,7 @@ void handleInput(char command)
         displayHelper();
         break;
     case 'l':
+        listAllEntries(DB_NAME);
         break;
     case 'q':
         closeDatabaseConnection();

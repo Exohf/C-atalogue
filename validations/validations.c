@@ -103,7 +103,7 @@ void getAndVerifyIpMask(char *mask)
     }
 }
 
-void getAndVerifyIPAddress()
+void getAndVerifyIPAddress(const char *db_name)
 {
     char ip_address[16];
     char mask[16];
@@ -128,5 +128,7 @@ void getAndVerifyIPAddress()
         }
     }
 
+    if (valid)
+        addIpToDatabase(ip_address, mask, db_name);
     // printf("%s, %s", ip_address, mask);
 }

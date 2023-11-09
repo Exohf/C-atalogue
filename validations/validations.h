@@ -19,6 +19,6 @@ void printRegexError(int failedProcess, regex_t *regex);
 int handleVerificationResult(int verifyProcess, regex_t *regex);
 int verifyAddress(char *address, int isIp);
 void getAndVerifyIpMask(char *mask);
-void getAndVerifyIPAddress();
+void getAndVerifyIPAddress(const char *db_name);
 
 #endif /* VALIDATIONS_H */
