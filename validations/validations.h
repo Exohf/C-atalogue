@@ -12,13 +12,15 @@
 
 #define REGEX_IPV4_VALIDATION "^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$"
 
+void printAddressValidity(char *address, int isValid, int isIp);
+int isValidSubnetMask(char *subnetMask);
+int isValidIPv4(const char *ip_address);
 void printNoCompilationRegex();
 int compileAndPrintErrorRegex(regex_t *regex);
-void printAddressValidity(char *address, int isValid, int isIp);
 void printRegexError(int failedProcess, regex_t *regex);
 int handleVerificationResult(int verifyProcess, regex_t *regex);
 int verifyAddress(char *address, int isIp);
-void getAndVerifyIpMask(char *mask);
+int getAndVerifyIpMask(char *mask);
 void getAndVerifyIPAddress(const char *db_name);
 
 #endif /* VALIDATIONS_H */
