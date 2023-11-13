@@ -45,7 +45,7 @@ void handleInput(char command)
         clearConsole();
         break;
     case 'd':
-        printf("\nCommand 'd' selected: Delete an IP.\n");
+        deleteEntryMenu(DB_NAME);
         break;
     case 'h':
         displayHelper();
@@ -54,7 +54,6 @@ void handleInput(char command)
         listAllEntries(DB_NAME);
         break;
     case 'q':
-        closeDatabaseConnection();
         printf("\nExiting the program...\n");
         exit(0);
     case 's':
@@ -65,7 +64,7 @@ void handleInput(char command)
         break;
     }
 }
-// Souhaitez-vous continuer ? [O/n]
+
 int main()
 {
     start();

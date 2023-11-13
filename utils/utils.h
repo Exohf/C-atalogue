@@ -6,6 +6,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <ctype.h>
+#include "../database/database_functions.h"
 
 void clearConsole();
 void warnHelpCommand();
@@ -13,6 +15,8 @@ void handleInvalidCommand();
 void clearInputBuffer();
 void start();
 void displayHelper();
-void maskToBinary(char *subnetMask);
+char *toBinary(char *subnetMask);
+int isNumeric(const char *str);
+void deleteEntryMenu(const char *db_name);
 
 #endif /* UTILS_UTILS_H */
