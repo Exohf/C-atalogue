@@ -13,5 +13,6 @@ void handleInvalidCommand();
 void clearInputBuffer();
 void start();
 void displayHelper();
+void maskToBinary(char *subnetMask);
 
 #endif /* UTILS_UTILS_H */

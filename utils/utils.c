@@ -43,3 +43,32 @@ void displayHelper()
            "\n");
 }
 
+void maskToBinary(char *subnetMask)
+{
+    char binaryString[33];
+    // Convert dotted-decimal to binary
+    unsigned long binaryMask = 0;
+    int i = 24;
+    char *octetStr;
+    octetStr = strtok(subnetMask, ".");
+    while (octetStr != NULL)
+    {
+        int octetValue = atoi(octetStr);
+        if (octetValue < 0 || octetValue > 255)
+        {
+            free(subnetMask);
+            return 0; // Invalid octet value
+        }
+        binaryMask |= (unsigned long)octetValue << i;
+        i -= 8;
+        octetStr = strtok(NULL, ".");
+    }
+
+    for (int j = 0; j < 32; j++)
+    {
+        binaryString[j] = ((binaryMask >> (31 - j)) & 1) ? '1' : '0';
+    }
+
+    binaryString[32] = '\0'; // Null-terminate the string
+    printf("Binary representation: %s\n", binaryString);
+}
