@@ -57,7 +57,6 @@ void maskToBinary(char *subnetMask)
         if (octetValue < 0 || octetValue > 255)
         {
             free(subnetMask);
-            return 0; // Invalid octet value
         }
         binaryMask |= (unsigned long)octetValue << i;
         i -= 8;
