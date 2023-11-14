@@ -93,52 +93,44 @@ int isValidSubnetMask(char *subnetMask)
 
 int isValidIPv4(char *ip_address)
 {
-    // Create a copy of the input string
     char *ip_copy = strdup(ip_address);
 
-    // Tokenize the copied IP address using dots as delimiters
     char *token = strtok(ip_copy, ".");
 
-    // Check if there are exactly four octets
     int octetCount = 0;
     while (token != NULL)
     {
         octetCount++;
 
-        // Convert the octet to an integer
         int octet = atoi(token);
 
-        // Check if the octet is within the valid range (0 to 255)
         if (octet < 0 || octet > 255)
         {
             printAddressValidity(ip_address, 0, 1);
-            free(ip_copy); // Free the allocated memory
-            return 0; // Invalid octet
+            free(ip_copy);
+            return 0;
         }
 
-        // Check for leading zeros in the octet
         if (strlen(token) > 1 && token[0] == '0')
         {
-            free(ip_copy); // Free the allocated memory
+            free(ip_copy);
             printAddressValidity(ip_address, 0, 1);
-            return 0; // Leading zeros are not allowed
+            return 0;
         }
 
-        // Move to the next octet
         token = strtok(NULL, ".");
     }
 
-    // Check if there are exactly four octets
     if (octetCount != 4)
     {
         printAddressValidity(ip_address, 0, 1);
-        free(ip_copy); // Free the allocated memory
-        return 0;      // Invalid number of octets
+        free(ip_copy);
+        return 0;
     }
 
     printAddressValidity(ip_address, 1, 1);
-    free(ip_copy); // Free the allocated memory
-    return 1;      // The IP address is valid
+    free(ip_copy);
+    return 1;
 }
 
 void printNoCompilationRegex()

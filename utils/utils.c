@@ -52,10 +52,9 @@ char *toBinary(char *address)
         exit(EXIT_FAILURE);
     }
 
-    // Convert dotted-decimal to binary
     unsigned long binaryMask = 0;
     int i = 24;
-    char *addressCopy = strdup(address); // Make a copy to avoid modifying the input string
+    char *addressCopy = strdup(address);
     char *octetStr = strtok(addressCopy, ".");
 
     while (octetStr != NULL)
@@ -65,7 +64,7 @@ char *toBinary(char *address)
         {
             free(addressCopy);
             free(binaryString);
-            return NULL; // Indicate an error
+            return NULL;
         }
         binaryMask |= (unsigned long)octetValue << i;
         i -= 8;
@@ -77,7 +76,7 @@ char *toBinary(char *address)
         binaryString[j] = ((binaryMask >> (31 - j)) & 1) ? '1' : '0';
     }
 
-    binaryString[32] = '\0'; // Null-terminate the string
+    binaryString[32] = '\0';
     free(addressCopy);
     return binaryString;
 }
@@ -88,10 +87,10 @@ int isNumeric(const char *str)
     {
         if (!isdigit(str[i]))
         {
-            return 0; // Not a numeric string
+            return 0;
         }
     }
-    return 1; // Numeric string
+    return 1;
 }
 
 void deleteEntryMenu(const char *db_name)
@@ -109,33 +108,27 @@ void deleteEntryMenu(const char *db_name)
             return;
         }
 
-        // Remove newline character from input
         userInput[strcspn(userInput, "\n")] = '\0';
 
-        // Check if the user wants to go back to the menu
         if (strcmp(userInput, "q") == 0 || strcmp(userInput, "Q") == 0)
         {
             return;
         }
 
-        // Validate the input as an integer
         if (!isNumeric(userInput))
         {
             printf("Invalid input. Please enter a valid numeric ID.\n");
             continue;
         }
 
-        // Convert the input to an integer
         idToDelete = atoi(userInput);
 
-        // Check if the ID is non-negative
         if (idToDelete < 0)
         {
             printf("Invalid input. Please enter a non-negative ID.\n");
             continue;
         }
 
-        // Perform the deletion
         deleteEntryByID(db_name, idToDelete);
         break;
     }
@@ -183,7 +176,6 @@ void getMatchingIPsBySubnetMask(const char *db_name, char *ip_address_bin, int m
     }
 
     sqlite3_finalize(stmt);
-    closeDatabaseConnection();
 }
 
 void searchFromSameNetworkIp(const char *db_name)
