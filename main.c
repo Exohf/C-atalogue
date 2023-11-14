@@ -54,6 +54,7 @@ void handleInput(char command)
         listAllEntries(DB_NAME);
         break;
     case 'q':
+        closeDatabaseConnection();
         printf("\nExiting the program...\n");
         exit(0);
     case 's':

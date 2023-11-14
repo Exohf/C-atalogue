@@ -53,7 +53,6 @@ void addIpToDatabase(const char *ip_address, const char *mask, const char *db_na
     snprintf(sql, sizeof(sql), "INSERT INTO IP_ADDRESS_LIST(ip_address, subnet_mask) VALUES ('%s', '%s')", ip_address, mask);
     sqlite3_exec(db, sql, 0, 0, 0);
     printf("Adresse IP ajoutée avec succès !\n");
-    closeDatabaseConnection(db_name);
 }
 
 void listAllEntries(const char *db_name)
@@ -98,7 +97,6 @@ void listAllEntries(const char *db_name)
     }
 
     sqlite3_finalize(stmt);
-    closeDatabaseConnection();
 }
 
 void deleteEntryByID(const char *db_name, int id)
@@ -128,8 +126,6 @@ void deleteEntryByID(const char *db_name, int id)
     {
         printf("Deleted entry with ID = %d successfully!\n", id);
     }
-
-    closeDatabaseConnection();
 }
 
 int initializeDatabase(const char *db_name)
