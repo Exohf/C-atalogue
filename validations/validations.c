@@ -111,8 +111,8 @@ int isValidIPv4(char *ip_address)
         // Check if the octet is within the valid range (0 to 255)
         if (octet < 0 || octet > 255)
         {
-            free(ip_copy); // Free the allocated memory
             printAddressValidity(ip_address, 0, 1);
+            free(ip_copy); // Free the allocated memory
             return 0; // Invalid octet
         }
 

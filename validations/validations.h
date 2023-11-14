@@ -14,7 +14,7 @@
 
 void printAddressValidity(char *address, int isValid, int isIp);
 int isValidSubnetMask(char *subnetMask);
-int isValidIPv4(const char *ip_address);
+int isValidIPv4(char *ip_address);
 void printNoCompilationRegex();
 int compileAndPrintErrorRegex(regex_t *regex);
 void printRegexError(int failedProcess, regex_t *regex);

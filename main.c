@@ -7,7 +7,7 @@
 
 void start()
 {
-    clearConsole();
+    // clearConsole();
 
     const char *message = ":::::::                   ::: ::::::::::: :::     :::        ::::::::   ::::::::  :::    ::: ::::::::::\n"
                           ":+:    :+:                :+: :+:   :+:   :+: :+:   :+:       :+:    :+: :+:    :+: :+:    :+: :+:\n"
@@ -59,6 +59,7 @@ void handleInput(char command)
         exit(0);
     case 's':
         printf("\nCommand 's' selected: Search similar by mask.\n");
+        searchFromSameNetworkIp(DB_NAME);
         break;
     default:
         handleInvalidCommand();

@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include "../database/database_functions.h"
+#include "../validations/validations.h"
 
 void clearConsole()
 {
@@ -138,4 +139,94 @@ void deleteEntryMenu(const char *db_name)
         deleteEntryByID(db_name, idToDelete);
         break;
     }
+}
+
+int compareBinaryRepresentation(const char *binary)
+{
+    for (int i = 0; i < strlen(binary); i++)
+    {
+        printf("%c", binary[i]);
+    }
+}
+
+void getMatchingIPsBySubnetMask(const char *db_name, char *ip_address_bin, int matchBits)
+{
+    sqlite3 *db = openDatabaseConnection(db_name);
+
+    if (!db)
+    {
+        fprintf(stderr, "Failed to open the database\n");
+        return;
+    }
+
+    char *sql = "SELECT * FROM IP_ADDRESS_LIST;";
+    sqlite3_stmt *stmt;
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, 0) != SQLITE_OK)
+    {
+        fprintf(stderr, "Failed to execute the query: %s\n", sqlite3_errmsg(db));
+        closeDatabaseConnection();
+        return;
+    }
+
+    while (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        char *ipAddressText = (char *)sqlite3_column_text(stmt, 1);
+        char *binaryRepresentation = toBinary(ipAddressText);
+
+        if (strncmp(binaryRepresentation, ip_address_bin, matchBits) == 0)
+        {
+            printf("%s\n", ipAddressText);
+        }
+
+        free(binaryRepresentation);
+    }
+
+    sqlite3_finalize(stmt);
+    closeDatabaseConnection();
+}
+
+void searchFromSameNetworkIp(const char *db_name)
+{
+
+    char ip_address[16];
+    char mask[16];
+    int valid = 0;
+    while (!valid)
+    {
+        printf("Enter an IP address (or 'q' to quit): ");
+        scanf("%s", ip_address);
+
+        if (strcmp(ip_address, "q") == 0)
+        {
+            printf("Quitting the program\n");
+            clearInputBuffer();
+            break;
+        }
+
+        if (verifyAddress(ip_address, 1) && getAndVerifyIpMask(mask))
+        {
+            valid = 1;
+        }
+    }
+
+    int zeroCount = 0;
+    char *ip_address_bin = toBinary(ip_address);
+    char *mask_to_binary = toBinary(mask);
+
+    for (int i = 0; i < 32; i++)
+    {
+        printf("%c", mask_to_binary[i]);
+        if (mask_to_binary[i] == '0')
+        {
+            zeroCount++;
+        }
+    }
+
+    int subnetMask = 32 - zeroCount;
+
+    getMatchingIPsBySubnetMask(db_name, ip_address_bin, subnetMask);
+
+    free(ip_address_bin);
+    free(mask_to_binary);
 }

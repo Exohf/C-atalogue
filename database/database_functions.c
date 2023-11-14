@@ -88,8 +88,8 @@ void listAllEntries(const char *db_name)
         printf("IP Address = %s\n", ipAddressText);
         char *binaryRepresentation = toBinary(ipAddressText);
         printf("IP Address (binary) = %s\n", binaryRepresentation);
-        result = realloc(result, strlen(result) + strlen(binaryRepresentation) + 1);
-        strcat(result, binaryRepresentation);
+        result = realloc(result, strlen(result) + strlen(binaryRepresentation) + 1); // Reallocate result to result + binary lenght + 1 bit 
+        strcat(result, binaryRepresentation); // add binaryRepresentation to result
         free(binaryRepresentation);
 
         printf("Subnet Mask = %s\n", subnetMaskText);
