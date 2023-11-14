@@ -140,7 +140,7 @@ int initializeDatabase(const char *db_name)
         return 1;
     }
 
-    char *sql = "CREATE TABLE IF NOT EXISTS IP_ADDRESS_LIST(Id INTEGER PRIMARY KEY AUTOINCREMENT, ip_address TEXT NOT NULL, subnet_mask TEXT NOT NULL);";
+    char *sql = "CREATE TABLE IF NOT EXISTS IP_ADDRESS_LIST(Id INTEGER PRIMARY KEY AUTOINCREMENT, ip_address TEXT NOT NULL, subnet_mask TEXT NOT NULL, ip_address_bin TEXT NOT NULL);";
 
     char *err_msg = 0;
     int return_code = sqlite3_exec(db, sql, 0, 0, &err_msg);
