@@ -35,7 +35,7 @@ int isValidSubnetMask(char *subnetMask)
     if (sscanf(subnetMask_copy, "%d.%d.%d.%d", &octet, &octet, &octet, &octet) != 4)
     {
         printAddressValidity(subnetMask, 0, 0);
-        return 0; // Invalid format
+        return 0;
     }
 
     // Convert dotted-decimal to binary
