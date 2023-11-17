@@ -31,7 +31,6 @@ int isValidSubnetMask(char *subnetMask)
         return 0; // NULL pointer
     }
 
-    // Validate the dotted-decimal format
     int octet;
     if (sscanf(subnetMask_copy, "%d.%d.%d.%d", &octet, &octet, &octet, &octet) != 4)
     {
